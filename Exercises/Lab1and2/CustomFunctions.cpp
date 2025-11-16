@@ -163,3 +163,20 @@ void fit_line(std::vector<std::vector<double>> data, std::vector<double> error){
 
     return;
 }
+
+double power(double x, int y){
+    
+
+    if (y < 0){
+        return 1/power(x,-y);
+    }	
+    switch (y){
+	case 0:
+	    return 1;    
+        case 1:
+    	    return x;	    
+	default:
+	    return x*power(x,y-1);
+      
+    }
+}
