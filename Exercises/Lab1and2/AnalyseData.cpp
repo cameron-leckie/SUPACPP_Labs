@@ -1,12 +1,19 @@
 #include <vector>
 #include "CustomFunctions.h"
-//
+
 int main(){
     std::string inputfile = "input2D_float.txt"; // filename
-    
+    std::string errorfile = "error2D_float.txt"; // error data
+						 
     // Read in data 
     std::vector<std::vector<double>> data = read(inputfile, true);
-    data.erase(data.begin());
+    std::vector<std::vector<double>> errortemp = read(errorfile, true);
+    
+    // Remove x error 
+    std::vector<double> error;
+    for (int i = 0; i < errortemp.size(); i++){
+    	error.push_back(errortemp[i][1]);
+    }
 
     int option;
     while (option != 4){
@@ -43,7 +50,7 @@ int main(){
                 break;
             case 3:
                 // Fit Data
-                fit_line(inputfile);
+                fit_line(data,error);
                 break;
             case 4:
 		// Exit

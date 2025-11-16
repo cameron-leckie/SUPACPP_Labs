@@ -15,4 +15,5 @@ void write(std::vector<std::vector<double>>& data, std::string outputFile, std::
 //// Math
 double magnitude(std::vector<double> data);
 std::vector<double> magnitude(std::vector<std::vector<double>> data);
-void fit_line(std::string inputfile);
+double chi_squared(std::vector<double> observed, std::vector<double> expected, std::vector<double> error);
+void fit_line(std::vector<std::vector<double>> data, std::vector<double> error = {});

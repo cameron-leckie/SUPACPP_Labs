@@ -1,1 +1,1 @@
-Fitted line equation: y = 0.126266*x + 2.026278
+Fitted line equation: y = 0.126266*x + 2.026278,	Chi2 = 791244.247383,	Chi2/DOF = 31649.769895

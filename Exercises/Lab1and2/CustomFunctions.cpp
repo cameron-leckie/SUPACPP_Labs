@@ -105,14 +105,19 @@ std::vector<double> magnitude(std::vector<std::vector<double>> data){
     return magVec;
 }
 
-void fit_line(std::string inputfile){
+double chi_squared(std::vector<double> observed, std::vector<double> expected, std::vector<double> error){
+    double chi2 = 0;
+    for (int i = 0; i < error.size(); i++){
+	chi2 += (observed[i] - expected[i])*(observed[i] - expected[i])/(error[i]*error[i]);
+    }
+    return chi2;
+}
+
+void fit_line(std::vector<std::vector<double>> data, std::vector<double> error){
     // Reads in data from a data file then fits a line to the data.
     // The data must only have 2 components.
 
-    // Load data
-    std::vector<std::vector<double>> data = read(inputfile,true);
-
-    // Start Least squares
+    //// Start Least squares
     double sumX = 0;
     double sumY = 0;
     double sumProdXY = 0;
@@ -128,9 +133,27 @@ void fit_line(std::string inputfile){
     // Calculate fitted line constants
     double p = (data.size()*sumProdXY - sumX*sumY)/(data.size()*sumX2 - sumX*sumX);
     double q = (sumX2*sumY - sumProdXY*sumX)/(data.size()*sumX2 - sumX*sumX);
-
-    // Create equation string
+        // Create equation string
     std::string equation = "Fitted line equation: y = " + std::to_string(p) + "*x + " + std::to_string(q);
+
+
+    //// chi2 calculation
+    if (!error.empty()){
+	// Calculate expected and observed vectors
+	std::vector<double> observed;
+	std::vector<double> expected;
+        for (int i = 0; i < error.size(); i++){
+	    observed.push_back(data[i][1]);
+	    expected.push_back(p*data[i][0] + q);
+	}
+        
+	// Calculate chi2
+        double chi2 = chi_squared(observed,expected,error);
+        double chi2_DOF = chi2/error.size();
+
+	// Extend output
+	equation += ",	Chi2 = " + std::to_string(chi2) + ",	Chi2/DOF = " + std::to_string(chi2_DOF);	
+    }
 
     // Print equation to terminal and file
     std::cout << equation << std::endl;
