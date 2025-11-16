@@ -5,7 +5,7 @@
 #include <cmath>
 
 //// READ ////
-std::vector<std::vector<double>> read(std::string inputfile){
+std::vector<std::vector<double>> read(std::string inputfile, bool header){
     std::ifstream dataFile; // file object
     std::vector<std::vector<double>> data; // 2D data vector
 
@@ -21,6 +21,10 @@ std::vector<std::vector<double>> read(std::string inputfile){
 
     // Read in data from file into variable data
     std::string line;
+    if (header) {
+	    std::getline(dataFile, line);
+    }
+
     while (std::getline(dataFile, line)) { // Loop over the lines
         
         // Store current line into row vector that can then be stored in data
@@ -107,7 +111,7 @@ void fit_line(std::string inputfile){
     // The data must only have 2 components.
 
     // Load data
-    std::vector<std::vector<double>> data = read_file(inputfile);
+    std::vector<std::vector<double>> data = read(inputfile,true);
 
     // Start Least squares
     double sumX = 0;
