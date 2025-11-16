@@ -4,7 +4,8 @@
 #include <vector>
 #include <cmath>
 
-std::vector<std::vector<double>> read_file(std::string inputfile){
+//// READ ////
+std::vector<std::vector<double>> read(std::string inputfile){
     std::ifstream dataFile; // file object
     std::vector<std::vector<double>> data; // 2D data vector
 
@@ -20,8 +21,6 @@ std::vector<std::vector<double>> read_file(std::string inputfile){
 
     // Read in data from file into variable data
     std::string line;
-    // Skip the header line that contains text not data
-    std::getline(dataFile,line);
     while (std::getline(dataFile, line)) { // Loop over the lines
         
         // Store current line into row vector that can then be stored in data
@@ -34,10 +33,12 @@ std::vector<std::vector<double>> read_file(std::string inputfile){
       data.push_back(row);
     }
     dataFile.close(); // Data read so file can be closed
+    
     return data;
 }
 
-void write_file(std::string outputfile, std::vector<std::vector<double>> data, std::string delimiter){
+//// WRITE ////
+void write(std::vector<std::vector<double>> data, std::string outputfile, std::string delimiter){
     // Writes 2D data to a file
 
     std::ofstream dataFile; // file object
@@ -56,7 +57,8 @@ void write_file(std::string outputfile, std::vector<std::vector<double>> data, s
     return;
 }
 
-void print_vector(std::vector<double> data, std::string delimiter){
+//// PRINT ////
+void print(std::vector<double> data, std::string delimiter){
     // Print all apart from last value
     for (int i = 0; i < data.size()-1; i++){
         // Print each value
@@ -67,35 +69,17 @@ void print_vector(std::vector<double> data, std::string delimiter){
     return;
 }
 
-void print_datafile(std::string inputfile, std::vector<std::vector<double>> data, std::string delimiter){
+void print(std::vector<std::vector<double>> data, std::string delimiter){
     
-    int nRows;
-    std::cout << "How many rows of " << inputfile << " do you want printed?" << std::endl;
-    std::cin >> nRows;
-
-    //while ( (0 > nRows) || (nRows > data.size())){
-    //    std::cout << "Invalid number of rows. Please enter a value between 0 and " << data.size() << std::endl;
-    //    std::cin >> nRows;
-    //}
-
-    if  ( (0 > nRows) || (nRows > data.size())){
-        std::cout << "Invalid number of rows" << std::endl;
-        nRows = 5;
-        if (nRows > data.size()){
-            nRows = data.size();
-        }
-    }
-    
-    // Print filename
-    std::cout << "First " << nRows << " rows in  data file: " << inputfile << std::endl;
     // Loop over the rows
-    for (int i = 0; i < nRows; i++){
+    for (int i = 0; i < data.size(); i++){
         // Print each row
-        print_vector(data[i],delimiter);
+        print(data[i],delimiter);
     }
     return;
 }
 
+//// MATH ////
 double magnitude(std::vector<double> data){
     // Calculatethe magnitude for an array of vectors
     double mag = 0; // magnitude of currect vector
@@ -104,6 +88,18 @@ double magnitude(std::vector<double> data){
         mag += data[i]*data[i];
     }
     return sqrt(mag);
+}
+
+std::vector<double> magnitude(std::vector<std::vector<double>> data){
+    // Calculatethe magnitude for an array of vectors
+    std::vector<double> magVec; // magnitude of all vectors
+    // Loop over each vector
+    for (int i = 0; i<data.size(); i++){
+        // Calculate the magnitude for each vector
+        magVec.push_back(magnitude(data[i]));
+    }
+
+    return magVec;
 }
 
 void fit_line(std::string inputfile){
@@ -120,10 +116,10 @@ void fit_line(std::string inputfile){
     double sumX2 = 0;
 
     for (int i = 0; i<data.size(); i++){
-        sumX += data[i][1];
-        sumY += data[i][2];
-        sumProdXY += data[i][1]*data[i][2];
-        sumX2 += data[i][1]*data[i][1];
+        sumX += data[i][0];
+        sumY += data[i][1];
+        sumProdXY += data[i][0]*data[i][1];
+        sumX2 += data[i][0]*data[i][0];
     }
 
     // Calculate fitted line constants

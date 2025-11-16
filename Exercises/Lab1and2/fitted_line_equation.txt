@@ -1,1 +1,1 @@
-Fitted line equation: y = 0.000000*x + -0.000000
+Fitted line equation: y = 0.126266*x + 2.026278
