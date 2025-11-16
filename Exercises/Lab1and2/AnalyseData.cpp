@@ -47,8 +47,8 @@ int main(){
 		subdata.assign(data.begin(), data.begin() + nRows);
                 // Print data to terminal
                 write(subdata,std::cout);
-                // Write data to file
-                write(subdata,"raw_data.txt");
+                //// Write data to file
+                // write(subdata,"raw_data.txt");
                 break;
             case 2:
                 // Calculate magnitude
