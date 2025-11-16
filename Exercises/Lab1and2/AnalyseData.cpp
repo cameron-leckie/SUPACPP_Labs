@@ -30,14 +30,16 @@ int main(){
                 if (nRows > data.size()) nRows = 5;   // prevent out-of-range
 		subdata.assign(data.begin(), data.begin() + nRows);
                 // Print data to terminal
-                print(subdata);
+                write(subdata,std::cout);
                 // Write data to file
                 write(subdata,"raw_data.txt");
                 break;
             case 2:
                 // Calculate magnitude
                 magnitudes = magnitude(data);
-                print(magnitudes);
+		// Write to terminal and file
+                write(magnitudes,std::cout);
+		write(magnitudes,"magnitude.txt");
                 break;
             case 3:
                 // Fit Data

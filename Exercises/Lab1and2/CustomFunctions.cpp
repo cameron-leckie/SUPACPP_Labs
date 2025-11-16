@@ -42,46 +42,45 @@ std::vector<std::vector<double>> read(std::string inputfile, bool header){
 }
 
 //// WRITE ////
-void write(std::vector<std::vector<double>> data, std::string outputfile, std::string delimiter){
+void write(std::vector<double>& data, std::ostream& output, std::string delimiter){
+    // Writes 1D data to a file
+    // loop over values
+    for (int i = 0; i< data.size()-1; i++){
+        // write all values apart from last
+        output << data[i] << delimiter;
+    }
+    // write last value and take a new line
+    output << data.back() << std::endl;
+    return;
+}
+
+void write(std::vector<std::vector<double>>& data, std::ostream& output, std::string delimiter){
     // Writes 2D data to a file
-
-    std::ofstream dataFile; // file object
-
-    dataFile.open(outputfile); // Open the output file
     // loop over the rows
     for (int i = 0; i < data.size(); i++){
-        // loop over the columns
-        for (int j = 0; j< data[i].size()-1; j++){
-            // write all values apart from last
-            dataFile << data[i][j] << delimiter;
-        }
-        // write last value and take a new line
-        dataFile << data[i].back() << std::endl;
+        write(data[i], output, delimiter);
     }
     return;
 }
 
-//// PRINT ////
-void print(std::vector<double> data, std::string delimiter){
-    // Print all apart from last value
-    for (int i = 0; i < data.size()-1; i++){
-        // Print each value
-        std::cout << data[i] << delimiter;
-    }
-    // Print last value
-    std::cout << data.back() << std::endl;
-    return;
+void write(std::vector<double>& data, std::string outputFile, std::string delimiter){
+        // This function will open a file with the provided filename then pass the open file to the other write function
+        std::ofstream output;
+        output.open(outputFile);
+        write(data, output, delimiter);
+        output.close();
+        return;
 }
 
-void print(std::vector<std::vector<double>> data, std::string delimiter){
-    
-    // Loop over the rows
-    for (int i = 0; i < data.size(); i++){
-        // Print each row
-        print(data[i],delimiter);
-    }
-    return;
+void write(std::vector<std::vector<double>>& data, std::string outputFile, std::string delimiter){
+	// This function will open a file with the provided filename then pass the open file to the other write function
+	std::ofstream output;
+	output.open(outputFile);
+	write(data, output, delimiter);
+	output.close();
+	return;
 }
+
 
 //// MATH ////
 double magnitude(std::vector<double> data){
