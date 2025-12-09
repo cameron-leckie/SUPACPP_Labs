@@ -11,19 +11,17 @@ using namespace std;
 ###################
 */
 
-Normal::Normal(){
-    // Call parent constructor then own constructor part
-    FiniteFunction();
-    m_mean = 0;
-    m_std = 1;
-};
+Normal::Normal() :
+    FiniteFunction(),
+    m_mean(0),
+    m_std(1)
+{}
 
-Normal::Normal(double range_min, double range_max, double mean, double std, string outfile){
-    // Call parent constructor then own constructor part
-    FiniteFunction(range_min, range_max,outfile);
-    m_mean = mean;
-    m_std = std;
-};
+Normal::Normal(double range_min, double range_max, double mean, double std, string outfile) :
+    FiniteFunction(range_min, range_max, outfile),
+    m_mean(mean),
+    m_std(std)
+{}
 
 /*
 ###################
@@ -40,6 +38,12 @@ void Normal::setStd(double std){m_std = std; return;};
 */ 
 double Normal::mean(){return m_mean;};
 double Normal::std(){return m_std;};
+void Normal::printInfo(){
+    cout << "mean: " << m_mean << endl;
+    cout << "std: " << m_std << endl;
+    FiniteFunction::printInfo();
+    return;
+}
 
 /*
 ###################

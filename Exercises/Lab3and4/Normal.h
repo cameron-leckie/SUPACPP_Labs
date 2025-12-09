@@ -17,9 +17,11 @@ class Normal : public FiniteFunction {
         // Getters
         double mean();
         double std();
+        void printInfo();
 
         // Function
         double callFunction(double x);
+
 
     protected:
         double m_mean;
