@@ -96,7 +96,7 @@ void FiniteFunction::printInfo(){
   std::cout << "rangeMin: " << m_RMin << std::endl;
   std::cout << "rangeMax: " << m_RMax << std::endl;
   std::cout << "integral: " << m_Integral << ", calculated using " << m_IntDiv << " divisions" << std::endl;
-  std::cout << "function: " << m_Functi+onName << std::endl;
+  std::cout << "function: " << m_FunctionName << std::endl;
 }
 
 /*

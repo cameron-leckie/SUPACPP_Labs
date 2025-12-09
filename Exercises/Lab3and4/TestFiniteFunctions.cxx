@@ -1,12 +1,14 @@
 #include <iostream>
 #include "FiniteFunctions.h"
+#include "ReadWrite.h"
 
 using namespace std;
 
 int main(){
-    FiniteFunction func();
+    FiniteFunction func(-5,5,"out");
 
-    cout << "Range min = " << func.rangeMin() << "\n";
-    cout << "Range max = " << func.rangeMax() << "\n";
+    func.printInfo();
+    //func.plotData;
+    //func.plotFunction
 
 }
