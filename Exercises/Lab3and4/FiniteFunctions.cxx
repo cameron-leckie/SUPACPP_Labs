@@ -62,9 +62,27 @@ Integration by hand (output needed to normalise function when plotting)
 ###################
 */ 
 double FiniteFunction::integrate(int Ndiv){ //private
-  //ToDo write an integrator
-  return -99;  
+  // This solution agrees https://www.integral-calculator.com to 5 sigfigs of the 1/(x^2 + 1). 
+  // Integral assumed to be working
+  // initialise variables for integration
+  double dx = (m_RMax - m_RMin)/Ndiv;
+  double x = m_RMin;
+  double integral = 0.;
+  
+  // Loop over all values not at the extremes
+  for (int i = 2; i<Ndiv; i++){
+    x += dx;
+    integral += this->callFunction(x);
+  }
+  
+  // Add the extreme values to the integral
+  integral += 0.5*(this->callFunction(m_RMin));
+  integral += 0.5*(this->callFunction(m_RMax));
+
+  // Output integral
+  return integral *= dx;
 }
+
 double FiniteFunction::integral(int Ndiv) { //public
   if (Ndiv <= 0){
     std::cout << "Invalid number of divisions for integral, setting Ndiv to 1000" <<std::endl;
