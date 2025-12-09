@@ -1,7 +1,7 @@
 #include <iostream>
 #include "FiniteFunctions.h"
 #include "ReadWrite.h"
-#include "Normal.h"
+#include "ChildFunctions.h"
 
 using namespace std;
 
@@ -26,5 +26,12 @@ int main(){
     funcNorm.printInfo();
     funcNorm.plotData(data1D,100);
     funcNorm.plotFunction();
+
+    cout << "Function 2 completed, moving to Cauchy-Lorentz \n \n";
+
+    CauchyLorentz funcCL(-10,10,3,-1,"outCL");
+    funcCL.printInfo();
+    funcCL.plotData(data1D,100);
+    funcCL.plotFunction();
 
 }
