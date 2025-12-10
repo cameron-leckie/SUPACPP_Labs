@@ -147,7 +147,7 @@ CrystalBall::CrystalBall() :
     m_std(1)
 {}
 
-CrystalBall::CrystalBall(double range_min, double range_max, double alpha, unsigned int n, double x0, double std, string outfile) :
+CrystalBall::CrystalBall(double range_min, double range_max, double alpha, double n, double x0, double std, string outfile) :
     FiniteFunction(range_min, range_max, outfile),
     m_alpha(alpha),
     m_n(n),
@@ -158,9 +158,9 @@ CrystalBall::CrystalBall(double range_min, double range_max, double alpha, unsig
         cout << "Alpha must be greater than 0. Setting alpha to 1 \n";
         m_alpha = 1;
     };
-    if (n <= 0){
+    if (n <= 1){
         cout << "n must be greater than 0. Setting n to 1 \n";
-        m_n = 1;
+        m_n = 2;
     };
     if (std <= 0){
         cout << "Standard deviation (std) must be greater than 0. Setting std to 1 \n";
@@ -176,7 +176,7 @@ CrystalBall::CrystalBall(double range_min, double range_max, double alpha, unsig
 */ 
 void CrystalBall::setAlpha(double alpha){m_alpha = alpha; return;};
 void CrystalBall::setX0(double x0){m_x0 = x0; return;};
-void CrystalBall::setN(unsigned int n){m_n = n; return;};
+void CrystalBall::setN(double n){m_n = n; return;};
 void CrystalBall::setStd(double std){m_std = std; return;};
 
 /*
@@ -186,7 +186,7 @@ void CrystalBall::setStd(double std){m_std = std; return;};
 */ 
 double CrystalBall::alpha(){return m_alpha;};
 double CrystalBall::x0(){return m_x0;};
-unsigned int CrystalBall::n(){return m_n;};
+double CrystalBall::n(){return m_n;};
 double CrystalBall::std(){return m_std;};
 
 void CrystalBall::printInfo(){
@@ -204,7 +204,7 @@ void CrystalBall::printInfo(){
 ###################
 */ 
 double CrystalBall::CrystalBallEval(double x) {
-    double A = pow(m_n/m_alpha,m_n);
+    double A = pow(m_n / m_alpha, m_n)*exp(-m_alpha*m_alpha/2);
     double B = m_n/m_alpha - m_alpha;
     double C = (m_n/m_alpha)*(1/(m_n - 1))*exp(-m_alpha*m_alpha/2);
     double D = sqrt(M_PI/2)*(1 + erf(m_alpha/sqrt(2)));
@@ -215,7 +215,7 @@ double CrystalBall::CrystalBallEval(double x) {
     if ( E > -m_alpha){
         y = exp(-E*E/2);
     } else {
-        y = A*pow(B - E, m_n);
+        y = A*pow(B - E, -m_n);
     };
 
     y *= N;

@@ -65,17 +65,17 @@ class CrystalBall : public FiniteFunction {
     public:
         // Constructors
         CrystalBall();
-        CrystalBall(double range_min, double range_max, double alpha, unsigned int n, double x0, double std, string outfile);
+        CrystalBall(double range_min, double range_max, double alpha, double n, double x0, double std, string outfile);
         // Setters
         void setAlpha(double alpha);
         void setX0(double x0);
-        void setN(unsigned int n);
+        void setN(double n);
         void setStd(double std);
 
         // Getters
         double alpha();
         double x0();
-        unsigned int n();
+        double n();
         double std();
         void printInfo();
 
@@ -85,7 +85,7 @@ class CrystalBall : public FiniteFunction {
 
     protected:
         double m_alpha;
-        unsigned int m_n;
+        double m_n;
         double m_x0;
         double m_std;
 

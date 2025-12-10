@@ -22,16 +22,22 @@ int main(){
 
     cout << "Function 1 completed, moving to normal \n \n";
 
-    Normal funcNorm(-10,10,-1,3,"outNorm");
+    Normal funcNorm(-10,10,-1,2,"outNorm"); // Correct Function
     funcNorm.printInfo();
     funcNorm.plotData(data1D,100);
     funcNorm.plotFunction();
 
     cout << "Function 2 completed, moving to Cauchy-Lorentz \n \n";
 
-    CauchyLorentz funcCL(-10,10,3,-1,"outCL");
+    CauchyLorentz funcCL(-10,10,1.5,-1,"outCL");
     funcCL.printInfo();
     funcCL.plotData(data1D,100);
     funcCL.plotFunction();
 
+    cout << "Function 3 completed, moving to Crystal Ball \n \n";
+    
+    CrystalBall funcCB(-10,10,1,5,-1,1.5,"outCB");
+    funcCB.printInfo();
+    funcCB.plotData(data1D,100);
+    funcCB.plotFunction();    
 }
