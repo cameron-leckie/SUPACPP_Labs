@@ -13,6 +13,7 @@ public:
   double rangeMin(); //Low end of the range the function is defined within
   double rangeMax(); //High end of the range the function is defined within
   double integral(int Ndiv = 1000); 
+  std::vector<double> metropolis(uint Nsamples = 1000, double std = 1., uint seed = 0);
   std::vector< std::pair<double,double> > scanFunction(int Nscan = 1000); //Scan over function to plot it (slight hack needed to plot function in gnuplot)
   void setRangeMin(double RMin);
   void setRangeMax(double RMax);

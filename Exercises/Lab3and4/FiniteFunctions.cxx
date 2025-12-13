@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <random>
 #include "FiniteFunctions.h"
 #include <filesystem> //To check extensions in a nice way
 
@@ -95,6 +96,44 @@ double FiniteFunction::integral(int Ndiv) { //public
   }
   else return m_Integral; //Don't bother re-calculating integral if Ndiv is the same as the last call
 }
+
+std::vector<double> FiniteFunction::metropolis(uint Nsamples, double std, uint seed)
+{
+
+  // Start random number engine with defined seed
+  std::mt19937 mtEngine{seed}; 
+  // Initialised pre known distributions
+  std::uniform_real_distribution<double> uniformPDF{m_RMin, m_RMax}; 
+  std::uniform_real_distribution<double> uniformPDF_T{0, 1};
+
+  // Initialise variables
+  std::vector<double> x; // output data
+  x.reserve(Nsamples);
+  double current = uniformPDF(mtEngine);;
+  double y; // second random number
+  double A; // ratio of random numbers
+  double T; // Acceptance threshold
+
+  for (uint i = 0; i < Nsamples; i++){
+    T = uniformPDF_T(mtEngine);
+    std::normal_distribution<double> gaussianPDF{current,std};
+    y = gaussianPDF(mtEngine);
+    
+    // Compute ratio
+    A = std::min((this->callFunction(y))/(this->callFunction(current)),1.);
+    
+    // Check ratio agaist threshold then accept or reject y
+    if (T<A){
+      x.push_back(y);
+      current = y;
+    } else {
+     x.push_back(current);
+    };       
+  }
+
+  return x;
+}
+
 
 /*
 ###################
